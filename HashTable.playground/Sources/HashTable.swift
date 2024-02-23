@@ -20,8 +20,26 @@ public struct HashTable<Key: Hashable, Value> {
         self.storage = [[Element]](repeating: [], count: capacity)
     }
 
-    private func index(for key: Key) -> Int {
+    private func storageIndex(for key: Key) -> Int {
         abs(key.hashValue % storage.count)
+    }
+
+    subscript(index: Key) -> Value {
+        get {
+            let storageIndex = storageIndex(for: index)
+            let values = storage[storageIndex]
+            let keyValuePair = values.first { $0.key == index }
+            guard let value = keyValuePair?.value else {
+                fatalError("Index out of range")
+            }
+            return value
+
+        }
+        set(newValue) {
+            let storageIndex = storageIndex(for: index)
+            storage[storageIndex].append((index, newValue))
+            count += 1
+        }
     }
 
     public func insert() {}
