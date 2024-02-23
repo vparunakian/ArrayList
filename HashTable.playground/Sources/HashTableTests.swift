@@ -1,6 +1,6 @@
 import XCTest
 
-final public class HashTableTests: XCTestCase {
+public final class HashTableTests: XCTestCase {
     func testNotNil() {
         let hashTable = HashTable<String, String>(capacity: 1)
         XCTAssertNotNil(hashTable)
